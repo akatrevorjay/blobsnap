@@ -194,7 +194,7 @@ func NewDir(cfs *FS, dtype DirType, name string, ref string, modTime string, mod
 	return
 }
 
-func (d *Dir) Attr(a *fuse.Attr) {
+func (d *Dir) Attr(ctx context.Context, a *fuse.Attr) error {
 	a.Inode = 1
 	a.Mode = d.Mode
 	if d.ModTime != "" {
@@ -204,6 +204,7 @@ func (d *Dir) Attr(a *fuse.Attr) {
 		}
 		a.Mtime = t
 	}
+	return nil
 }
 
 func (d *Dir) readDir() (out []fuse.Dirent, ferr error) {
@@ -356,7 +357,7 @@ func NewFile(fs *FS, name string, ref string, size int, modTime string, mode os.
 	return f
 }
 
-func (f *File) Attr(a *fuse.Attr) {
+func (f *File) Attr(ctx context.Context, a *fuse.Attr) error {
 	a.Inode = 2
 	a.Mode = f.Mode
 	a.Size = f.Size
@@ -367,7 +368,7 @@ func (f *File) Attr(a *fuse.Attr) {
 		}
 		a.Mtime = t
 	}
-
+	return nil
 }
 
 func (f *File) Open(ctx context.Context, req *fuse.OpenRequest, res *fuse.OpenResponse) (fs.Handle, error) {

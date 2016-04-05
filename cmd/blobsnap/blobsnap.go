@@ -17,8 +17,8 @@ var version = "dev"
 func main() {
 	app := cli.NewApp()
 	commonFlags := []cli.Flag{
-		cli.StringFlag{"host", "", "override the real hostname"},
-		cli.StringFlag{"config", "", "config file"},
+		cli.StringFlag{Name: "host", Value: "", Usage: "override the real hostname"},
+		cli.StringFlag{Name: "config", Value: "", Usage: "config file"},
 	}
 	app.Name = "blobsnap"
 	app.Usage = "BlobSnap command-line tool"
